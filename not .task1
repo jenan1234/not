@@ -1,0 +1,38 @@
+CREATE DATABASE HR;
+USE HR;
+CREATE TABLE Department (
+    dept_id INT PRIMARY KEY AUTO_INCREMENT,
+    dept_name VARCHAR(100) NOT NULL
+);
+CREATE TABLE Location (
+    location_id INT PRIMARY KEY AUTO_INCREMENT,
+    city VARCHAR(100) NOT NULL,
+    country VARCHAR(100) NOT NULL
+);
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    job_title VARCHAR(100),
+    salary DECIMAL(10,2),
+    dept_id INT,
+    location_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id),
+    FOREIGN KEY (location_id) REFERENCES Location(location_id)
+);
+CREATE TABLE Project (
+    project_id INT PRIMARY KEY AUTO_INCREMENT,
+    project_name VARCHAR(100) NOT NULL,
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+INSERT INTO Department (dept_name) VALUES ('HR'), ('IT'), ('Finance'), ('Marketing');
+INSERT INTO Location (city, country) VALUES ('New York', 'USA'), ('London', 'UK'), ('Berlin', 'Germany'), ('Tokyo', 'Japan');
+INSERT INTO Employee (first_name, last_name, job_title, salary, dept_id, location_id) VALUES
+('John', 'Doe', 'Manager', 80000, 1, 1),
+('Jane', 'Smith', 'Developer', 70000, 2, 2),
+('Mike', 'Brown', 'Accountant', 60000, 3, 3),
+('Emily', 'Davis', 'Marketing Lead', 75000, 4, 4);
+INSERT INTO Project (project_name, dept_id) VALUES ('HR Transformation', 1), ('AI Development', 2), ('Tax Automation', 3), ('Brand Expansion', 4);
+UPDATE Employee SET salary = 85000 WHERE first_name = 'John' AND last_name = 'Doe';
+DELETE FROM Employee WHERE first_name = 'Mike' AND last_name = 'Brown';
